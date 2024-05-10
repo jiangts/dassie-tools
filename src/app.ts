@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.end('dassie-tools is running');
+  res.end('DassieTools is running');
 });
 
 app.use('/api/v1', api);

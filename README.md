@@ -4,6 +4,7 @@ Tool registration workflow
 
 1. check for API key, notify Dassie of
    - our webhook domain
+   - the toolkit name
    - the tools we've registered:
      - for each, share `name, description, input schema, route`. (Output is just a string)
 2. on webhook called

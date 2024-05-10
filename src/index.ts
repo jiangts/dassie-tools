@@ -23,10 +23,16 @@ const server = app.listen(port, async () => {
     // Start LocalTunnel
     // give time for localtunnel server to deallocate the subdomain
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const tunnel = await lt.startTunnel(port, 'dassie-tools');
+    const tunnel = await lt.startTunnel(port);
     toolDomain = tunnel.url;
+    // TODO: move ngrok tunnel code to tunnel.ts
+    // const tunnel = await ngrok.forward({
+    //   addr: port,
+    //   authtoken: ngrokAuthToken,
+    // });
+    // toolDomain = tunnel.url() || '';
   }
-  console.log(`Webhook URL: ${domain}`);
+  console.log(`Webhook URL: ${toolDomain}`);
   await registerTools(app, toolDomain);
 
   if (ollamaPort) {

@@ -61,3 +61,12 @@ npm run test
 ```
 npm run dev
 ```
+
+
+
+#### Calling tools locally
+
+```sh
+curl -w "\nstatus code: %{http_code}\n" -X POST -H "Content-Type: application/json" -d '{"query":"howdy"}' http://localhost:8888/api/tools?tool=Run+SQL
+```
+

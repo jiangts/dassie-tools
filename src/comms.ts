@@ -1,17 +1,23 @@
 import { Express } from 'express';
+import { toolkit } from './toolkit';
+import zodToJsonSchema from 'zod-to-json-schema';
+import _ from 'lodash';
 
 const API_KEY = process.env.DASSIE_API_KEY;
 const DASSIE_ORIGIN = process.env.DASSIE_ORIGIN || 'https://api.dassieai.com';
 
-export const registerTools = async (app: Express, toolServerUrl: string) => {
-  const tools = app.get('tools') || [];
+export const registerTools = async (app: Express, toolkitServerUrl: string) => {
 
+  const toolkitData = _.cloneDeep(toolkit);
+  for (const tool of toolkitData.tools) {
+    tool.schema = zodToJsonSchema(tool.schema) as any;
+  }
   const body = {
-    tools,
-    toolServerUrl,
+    toolkit,
+    toolkitServerUrl,
   };
 
-  const response = await fetch(DASSIE_ORIGIN + '/api/tools/register', {
+  const response = await fetch(DASSIE_ORIGIN + '/api/toolkits/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +35,7 @@ export const registerTools = async (app: Express, toolServerUrl: string) => {
 export const registerOllama = async (ollamaUrl: string) => {
   const body = { ollamaUrl };
 
-  const response = await fetch(DASSIE_ORIGIN + '/api/tools/register-ollama', {
+  const response = await fetch(DASSIE_ORIGIN + '/api/toolkits/register-ollama', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

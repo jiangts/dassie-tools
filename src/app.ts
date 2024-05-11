@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.end('DassieTools is running');
 });
 
-app.use('/api/v1', api);
+app.use('/api', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

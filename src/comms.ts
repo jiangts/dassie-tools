@@ -1,4 +1,3 @@
-import { Express } from 'express';
 import { toolkit } from './toolkit';
 import zodToJsonSchema from 'zod-to-json-schema';
 import _ from 'lodash';
@@ -6,14 +5,14 @@ import _ from 'lodash';
 const API_KEY = process.env.DASSIE_API_KEY;
 const DASSIE_ORIGIN = process.env.DASSIE_ORIGIN || 'https://api.dassieai.com';
 
-export const registerTools = async (app: Express, toolkitServerUrl: string) => {
+export const registerTools = async (toolkitServerUrl: string) => {
 
   const toolkitData = _.cloneDeep(toolkit);
   for (const tool of toolkitData.tools) {
     tool.schema = zodToJsonSchema(tool.schema) as any;
   }
   const body = {
-    toolkit,
+    toolkit: toolkitData,
     toolkitServerUrl,
   };
 

@@ -66,7 +66,27 @@ npm run dev
 
 #### Calling tools locally
 
+Using `curl`
 ```sh
 curl -w "\nstatus code: %{http_code}\n" -X POST -H "Content-Type: application/json" -d '{"query":"howdy"}' http://localhost:8888/api/tools?tool=Run+SQL
+```
+
+Using browser `fetch`
+
+```javascript
+fetch('http://localhost:8888/api/tools?tool=Run+SQL', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({query: "howdy"})
+}).then(response => {
+    console.log('Status code:', response.status);
+    return response.json();
+}).then(data => {
+    console.log('Response data:', data);
+}).catch(error => {
+    console.error('Error:', error);
+});
 ```
 

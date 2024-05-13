@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const toolkit = {
-  toolkit_id: '669a0e19-4f8e-4f59-82b0-008f76dcf2b5',
+  toolkit_id: '839a5a30-17ab-4381-be7b-734ccee6a7f6',
   tools: [
     {
       name: 'Run SQL',

@@ -1,10 +1,10 @@
+require('dotenv').config();
+
 import app from './app';
 import { registerOllama, registerTools } from './comms';
 import LT from './tunnel';
 import ngrok from '@ngrok/ngrok';
 import 'colors';
-
-require('dotenv').config();
 
 const port = Number(process.env.PORT || 8888);
 const domain = process.env.DOMAIN;
@@ -18,22 +18,23 @@ const server = app.listen(port, async () => {
   console.log(`Listening: http://localhost:${port}`);
   /* eslint-enable no-console */
 
-  let toolDomain = domain;
-  if (!toolDomain) {
+  let toolkitServerUrl = domain;
+  if (!toolkitServerUrl) {
     // Start LocalTunnel
     // give time for localtunnel server to deallocate the subdomain
     await new Promise((resolve) => setTimeout(resolve, 1000));
     // const tunnel = await lt.startTunnel(port);
-    // toolDomain = tunnel.url;
+    // toolkitServerUrl = tunnel.url;
     // TODO: move ngrok tunnel code to tunnel.ts
     const tunnel = await ngrok.forward({
       addr: port,
       authtoken: ngrokAuthToken,
     });
-    toolDomain = tunnel.url() || '';
+    toolkitServerUrl = tunnel.url() || '';
   }
-  console.log(`Webhook URL: ${toolDomain}`);
-  await registerTools(app, toolDomain);
+  console.log(`Webhook URL: ${toolkitServerUrl}`);
+  await registerTools(toolkitServerUrl);
+  app.set('toolkitServerUrl', toolkitServerUrl);
 
   if (ollamaPort) {
     if (!ngrokAuthToken) {
@@ -54,6 +55,7 @@ const server = app.listen(port, async () => {
       if (ollamaUrl) {
         console.log(`Ollama server URL: ${ollamaUrl}`);
         await registerOllama(ollamaUrl);
+        app.set('ollamaUrl', ollamaUrl);
       }
     }
   }

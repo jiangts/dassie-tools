@@ -9,9 +9,9 @@ export const generateSignature = (payload: any, secret: string) => {
 
 export const verifyWebhookSignature = (secret: string) => (req: Request, res: Response, next: NextFunction) => {
   const timestamp = req.headers['X-Timestamp'];
-  const signature = req.headers['X-Signature'];
   const nonce = req.headers['X-Nonce'];
-  if (!signature || !nonce) {
+  const signature = req.headers['X-Signature'];
+  if (!signature || !nonce || !timestamp) {
     return res.status(401).send('Unsigned request');
   }
 

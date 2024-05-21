@@ -16,11 +16,6 @@ Tool registration workflow
 
 
 
-Should I get rid of...
-* [eslint](https://www.npmjs.com/package/eslint)
-  * ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
-* [typescript-eslint](https://typescript-eslint.io/)
-  * Tooling which enables ESLint to support TypeScript.
 
 Testing:
 * [jest](https://www.npmjs.com/package/jest)

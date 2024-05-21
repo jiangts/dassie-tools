@@ -26,7 +26,7 @@ export const registerTools = async (toolkitServerUrl: string) => {
   });
 
   const data = await response.json();
-  console.log('response', data);
+  console.log('response toolkit', data);
   return data;
 };
 
@@ -44,6 +44,6 @@ export const registerOllama = async (ollamaUrl: string) => {
   });
 
   const data = await response.json();
-  console.log('response', data);
+  console.log('response ollama', data);
   return data;
 };

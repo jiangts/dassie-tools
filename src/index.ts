@@ -14,9 +14,7 @@ const ngrokAuthToken = process.env.NGROK_AUTHTOKEN;
 const lt = new LT();
 
 const server = app.listen(port, async () => {
-  /* eslint-disable no-console */
   console.log(`Listening: http://localhost:${port}`);
-  /* eslint-enable no-console */
 
   let toolkitServerUrl = domain;
   if (!toolkitServerUrl) {

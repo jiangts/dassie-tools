@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
 export const toolkit = {
-  toolkit_id: '839a5a30-17ab-4381-be7b-734ccee6a7f6',
+  handle: 'Allan/local-toolkit',
   tools: [
     {
-      name: 'Run SQL',
-      description: 'A collection of tools for DassieAI',
+      name: 'Run-SQL',
+      description: 'Runs SQL query on a database',
       schema: z.object({
         query: z.string().describe('The SQL query to execute'),
       }),

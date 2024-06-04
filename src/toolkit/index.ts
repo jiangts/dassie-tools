@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import './sql-example'
+import { describeTable, describeTables, rawQuery } from './sql-example';
 
 export const toolkit = {
   handle: 'Allan/local-toolkit',
@@ -11,7 +13,18 @@ export const toolkit = {
       }),
       handler: function (data: any) {
         data = this.schema.parse(data);
-        return `Executing SQL query: ${JSON.stringify(data.query)}`;
+        return rawQuery(data.query);
+      },
+    },
+    {
+      name: 'Describe-Tables',
+      description: 'Describes database table schema',
+      schema: z.object({
+        all_tables: z.boolean().default(true),
+      }),
+      handler: function (data: any) {
+        data = this.schema.parse(data);
+        return describeTables()
       },
     },
   ],

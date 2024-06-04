@@ -1,5 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
+const YAML = require('yaml');
+// const sequelize = new Sequelize({
+//   dialect: 'sqlite',
+//   storage: 'demo.db', // Change this to a file-based SQLite database
+// });
+
 
 // Define models
 const User = sequelize.define('User', {
@@ -134,9 +140,43 @@ const seedDatabase = async () => {
   await Transaction.bulkCreate(transactions);
 
   console.log('Database seeded!');
-  sequelize.close();
 };
 
-seedDatabase().catch(error => {
+seedDatabase().then(async () => {
+  console.log(await describeTables())
+}).catch(error => {
   console.error('Failed to seed database:', error);
 });
+
+export const rawQuery = async (query: string) => {
+  try {
+    const result = await sequelize.query(query, { type: sequelize.QueryTypes.SELECT });
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const describeTable = async (tableName: string) => {
+  try {
+    const result = await sequelize.getQueryInterface().describeTable(tableName);
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const describeTables = async () => {
+  try {
+    const tables = await sequelize.getQueryInterface().showAllTables();
+    const result = Promise.all(tables.map(async (table: string) => {
+      return {
+        table: table,
+        fields: await describeTable(table)
+      }
+    }));
+    return result
+  } catch (error) {
+    return error;
+  }
+}

@@ -1,5 +1,22 @@
 # dassie-tools
 
+USAGE:
+
+Set the following env variables within `.env`
+
+```
+DASSIE_API_KEY=<YOUR DASSIE API KEY>
+DASSIE_TOOLKIT_HANDLE=<YOUR DASSIE TOOLKIT HANDLE>
+DASSIE_ORIGIN=http://api.dassieai.com
+
+# if doing local development
+NGROK_AUTHTOKEN=<YOUR NGROK AUTH TOKEN>
+
+# if using ollama
+OLLAMA_PORT=11434
+```
+
+
 Tool registration workflow
 
 1. check for API key, notify Dassie of

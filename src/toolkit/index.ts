@@ -3,7 +3,7 @@ import './sql-example'
 import { describeTable, describeTables, rawQuery } from './sql-example';
 
 export const toolkit = {
-  handle: 'Allan/local-toolkit',
+  handle: process.env.DASSIE_TOOLKIT_HANDLE,
   tools: [
     {
       name: 'Run-SQL',
